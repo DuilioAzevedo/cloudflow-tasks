@@ -1,7 +1,8 @@
 package com.example.cloudflow_tasks.controllers;
 
-import com.example.cloudflow_tasks.models.Task; // IMPORTANTE: Sua classe!
+import com.example.cloudflow_tasks.models.Task;
 import com.example.cloudflow_tasks.repositories.TaskRepository;
+import com.example.cloudflow_tasks.services.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
