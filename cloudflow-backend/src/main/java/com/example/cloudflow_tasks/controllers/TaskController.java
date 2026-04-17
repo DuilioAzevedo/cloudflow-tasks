@@ -13,16 +13,28 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:5173")
 public class TaskController {
 
+
+
     @Autowired
-    private TaskRepository repository;
+    private TaskService service;
 
     @GetMapping
     public List<Task> getAllTasks() {
-        return repository.findAll();
+        return service.listarTodas();
     }
 
     @PostMapping
     public Task createTask(@RequestBody Task task) {
-        return repository.save(task);
+        return service.salvar(task);
+    }
+
+    @PatchMapping("/{id}")
+    public Task toggleTask(@PathVariable Long id) {
+        return service.alternarConcluida(id);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteTask(@PathVariable Long id) {
+        service.deletar(id);
     }
 }

@@ -6,6 +6,18 @@ function App() {
   const [tasks, setTasks] = useState([])
   const [newTitle, setNewTitle] = useState('')
 
+  // Função para alternar concluída
+const toggleTask = async (id) => {
+  await axios.patch(`http://localhost:8080/api/tasks/${id}`)
+  fetchTasks()
+}
+
+// Função para deletar
+const deleteTask = async (id) => {
+  await axios.delete(`http://localhost:8080/api/tasks/${id}`)
+  fetchTasks()
+}
+
   // Função para buscar tarefas
   const fetchTasks = async () => {
     const response = await axios.get('http://localhost:8080/api/tasks')
@@ -48,17 +60,25 @@ function App() {
         </form>
 
         <div className="space-y-3">
-          {tasks.map(task => (
-            <div key={task.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border">
-              <span className={task.completed ? "line-through text-gray-400" : "text-gray-700"}>
-                {task.title}
-              </span>
-              <button className="text-red-400 hover:text-red-600">
-                <Trash2 size={18} />
-              </button>
-            </div>
-          ))}
-        </div>
+  {tasks.map(task => (
+    
+    <div key={task.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border">
+      <span 
+        onClick={() => toggleTask(task.id)}
+        className={`cursor-pointer flex-1 ${task.completed ? "line-through text-gray-400" : "text-gray-700 font-medium"}`}
+      >
+        {task.title}
+      </span>
+      
+      <button 
+        onClick={() => deleteTask(task.id)} 
+        className="text-red-400 hover:text-red-600 p-1 rounded-md hover:bg-red-50 transition"
+      >
+        <Trash2 size={18} />
+      </button>
+    </div>
+  ))}
+</div>
       </div>
     </div>
   )

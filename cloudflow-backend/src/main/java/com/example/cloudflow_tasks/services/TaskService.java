@@ -26,4 +26,10 @@ public class TaskService {
     public void deletar(Long id) {
         repository.deleteById(id);
     }
+
+    public Task alternarConcluida(Long id) {
+        Task task = repository.findById(id).orElseThrow(() -> new RuntimeException("Tarefa não encontrada"));
+        task.setCompleted(!task.isCompleted());
+        return repository.save(task);
+    }
 }
